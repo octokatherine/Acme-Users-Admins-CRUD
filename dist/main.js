@@ -40090,9 +40090,9 @@ function (_Component) {
       var users = this.props.users;
       console.log(users);
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Users"), users.map(function (user) {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          key: user.id
-        }, user[0]);
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, Object.keys(user).map(function (key) {
+          if (key !== 'id') return user[key];
+        }));
       }));
     }
   }]);

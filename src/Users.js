@@ -12,7 +12,11 @@ class Users extends Component {
             <div>
                 <h2>Users</h2>
                 {
-                    users.map((user)=><div key={user.id}>{user[0]}</div>)
+                    users.map(user=> {
+                        return <div>{Object.keys(user).map( key=>{ 
+                        if (key !== 'id') return user[key]
+                    })}</div>
+                    })
                 }
             </div>
          );
