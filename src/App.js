@@ -104,12 +104,14 @@ class App extends React.Component{
       }
       this.createUser = this.createUser.bind(this);
       this.updateUser = this.updateUser.bind(this);
+      this.deleteUser = this.deleteUser.bind(this);
     }
 
     componentDidMount(){
       db.read()
         .then(users => this.setState({ users }))
 
+      console.log(this.state)
     }
 
     async createUser(e, name, isAdmin){
@@ -130,13 +132,23 @@ class App extends React.Component{
         const updatedUsers = this.state.users;
         updatedUsers[idx] = updatedUser;
         this.setState({users: updatedUsers})
+}
+
+    async deleteUser(e, user){
+        e.preventDefault();
+        console.log('delete')
+        console.log(user)
+        const idx = this.state.users.indexOf(user);
+        const deletedUser = await db.destroy(user);
+        const updatedUsers = Array.concat(this.state.users.slice(0, idx), this.state.users.slice(idx+1, this.state.users.length-1));
+        this.setState({users: updatedUsers})
         
     }
 
     render(){
         console.log(this.state);
         const { users, admins } = this.state;
-        const { createUser, updateUser } = this;
+        const { createUser, updateUser, deleteUser } = this;
       return( 
           <HashRouter>
             <div id='nav'>
@@ -145,7 +157,7 @@ class App extends React.Component{
             </div>
             <Route exact path='/' component={Home}/>
             <Route path='/users' render={()=><Users users={users} createUser={createUser} admins={admins}/>}/>
-            <Route path='/users/:id' render={(props)=><UpdateUser users={users}  updateUser={updateUser} {...props}/>}/>
+            <Route path='/users/:id' render={(props)=><UpdateUser users={users}  updateUser={updateUser} deleteUser={deleteUser} {...props}/>}/>
           </HashRouter>
       );
     }
