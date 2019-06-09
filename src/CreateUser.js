@@ -17,7 +17,7 @@ class CreateUser extends Component {
     }
 
     handleCheckChange(ev){
-        const value = event.target.checked
+        const value = ev.target.checked
         this.setState({isAdmin: value})
     }
     

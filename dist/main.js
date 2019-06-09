@@ -40046,7 +40046,7 @@ function (_React$Component) {
     value: function () {
       var _updateUser = _asyncToGenerator(
       /*#__PURE__*/
-      regeneratorRuntime.mark(function _callee2(e, user) {
+      regeneratorRuntime.mark(function _callee2(e, user, isAdmin) {
         var idx, updatedUser, updatedUsers;
         return regeneratorRuntime.wrap(function _callee2$(_context2) {
           while (1) {
@@ -40059,6 +40059,7 @@ function (_React$Component) {
 
               case 4:
                 updatedUser = _context2.sent;
+                updatedUser.isAdmin = isAdmin;
                 console.log(updatedUser);
                 updatedUsers = this.state.users;
                 updatedUsers[idx] = updatedUser;
@@ -40066,7 +40067,7 @@ function (_React$Component) {
                   users: updatedUsers
                 });
 
-              case 9:
+              case 10:
               case "end":
                 return _context2.stop();
             }
@@ -40074,7 +40075,7 @@ function (_React$Component) {
         }, _callee2, this);
       }));
 
-      function updateUser(_x4, _x5) {
+      function updateUser(_x4, _x5, _x6) {
         return _updateUser.apply(this, arguments);
       }
 
@@ -40193,7 +40194,7 @@ function (_Component) {
   }, {
     key: "handleCheckChange",
     value: function handleCheckChange(ev) {
-      var value = event.target.checked;
+      var value = ev.target.checked;
       this.setState({
         isAdmin: value
       });
@@ -40299,9 +40300,11 @@ function (_Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(UpdateUser).call(this, props));
     _this.state = {
-      user: {}
+      user: {},
+      isAdmin: false
     };
     _this.handleChange = _this.handleChange.bind(_assertThisInitialized(_this));
+    _this.handleCheckChange = _this.handleCheckChange.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -40315,7 +40318,8 @@ function (_Component) {
         return user.id === id;
       });
       this.setState({
-        user: user
+        user: user,
+        isAdmin: user.isAdmin
       });
     }
   }, {
@@ -40328,7 +40332,8 @@ function (_Component) {
           return user.id === id;
         });
         this.setState({
-          user: user
+          user: user,
+          isAdmin: user.isAdmin
         });
       }
     }
@@ -40342,21 +40347,37 @@ function (_Component) {
       });
     }
   }, {
+    key: "handleCheckChange",
+    value: function handleCheckChange(ev) {
+      var value = ev.target.checked;
+      this.setState({
+        isAdmin: value
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
       console.log(this.state);
-      var user = this.state.user;
-      var handleChange = this.handleChange;
+      var _this$state = this.state,
+          user = _this$state.user,
+          isAdmin = _this$state.isAdmin;
+      var handleChange = this.handleChange,
+          handleCheckChange = this.handleCheckChange;
       var updateUser = this.props.updateUser;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
         onSubmit: function onSubmit(e) {
-          return updateUser(e, user);
+          return updateUser(e, user, isAdmin);
         }
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Update User"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         placeholder: "enter name",
         name: "name",
         value: user && user.name,
         onChange: handleChange
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "is Admin"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "checkbox",
+        name: "isAdmin",
+        checked: isAdmin,
+        onChange: handleCheckChange
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         type: "submit"
       }, "Update"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {

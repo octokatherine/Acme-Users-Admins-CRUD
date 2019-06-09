@@ -121,10 +121,11 @@ class App extends React.Component{
         console.log('created')
     }
 
-    async updateUser(e, user) {
+    async updateUser(e, user, isAdmin) {
         e.preventDefault();
         const idx = this.state.users.indexOf(user);
         const updatedUser = await db.update(user);
+        updatedUser.isAdmin = isAdmin;
         console.log(updatedUser)
         const updatedUsers = this.state.users;
         updatedUsers[idx] = updatedUser;
