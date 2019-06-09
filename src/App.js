@@ -89,6 +89,7 @@ function DB(key){
 import React from 'react';
 import Home from './Home';
 import Users from './Users';
+import UpdateUser from './UpdateUser'
 import {HashRouter, NavLink, Route} from 'react-router-dom'
 
 const db = new DB('users');
@@ -103,20 +104,26 @@ class App extends React.Component{
       }
       this.createUser = this.createUser.bind(this);
     }
+
     componentDidMount(){
       db.read()
         .then(users => this.setState({ users }))
+
     }
 
-    createUser(e, name){
+    async createUser(e, name, isAdmin){
         e.preventDefault();
-        db.create(name)
+        const newUser = await db.create({name, isAdmin})
+        console.log(newUser)
+        const users = [...this.state.users, newUser];
+        this.setState({users});
         console.log('created')
+       
     }
 
     render(){
         console.log(this.state);
-        const { users } = this.state;
+        const { users, admins } = this.state;
         const { createUser } = this;
       return( 
           <HashRouter>
@@ -125,7 +132,8 @@ class App extends React.Component{
                 <NavLink exact activeClassName='is-active' to='/users'>Users ({users.length})</NavLink>
             </div>
             <Route exact path='/' component={Home}/>
-            <Route path='/users' render={()=><Users users={users} createUser={createUser}/>}/>
+            <Route path='/users' render={()=><Users users={users} createUser={createUser} admins={admins}/>}/>
+            <Route path='/users/:id' render={(props)=><UpdateUser users={users}  {...props}/>}/>
           </HashRouter>
       );
     }
