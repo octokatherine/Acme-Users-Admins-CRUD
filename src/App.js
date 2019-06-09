@@ -90,6 +90,7 @@ import React from 'react';
 import Home from './Home';
 import Users from './Users';
 import {HashRouter, NavLink, Route} from 'react-router-dom'
+
 const db = new DB('users');
 
           
@@ -100,20 +101,31 @@ class App extends React.Component{
       this.state = {
         users: []
       }
+      this.createUser = this.createUser.bind(this);
     }
     componentDidMount(){
       db.read()
         .then(users => this.setState({ users }))
     }
+
+    createUser(e, name){
+        e.preventDefault();
+        db.create(name)
+        console.log('created')
+    }
+
     render(){
         console.log(this.state);
         const { users } = this.state;
+        const { createUser } = this;
       return( 
           <HashRouter>
-            <NavLink exact activeClassName='is-active' to='/'>Home</NavLink>
-            <NavLink exact activeClassName='is-active' to='/users'>Users</NavLink>
+            <div id='nav'>
+                <NavLink exact activeClassName='is-active' to='/'>Home</NavLink>
+                <NavLink exact activeClassName='is-active' to='/users'>Users ({users.length})</NavLink>
+            </div>
             <Route exact path='/' component={Home}/>
-            <Route path='/users' render={()=><Users users={users} />}/>
+            <Route path='/users' render={()=><Users users={users} createUser={createUser}/>}/>
           </HashRouter>
       );
     }

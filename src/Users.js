@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import CreateUser from './CreateUser'
 
 class Users extends Component {
     constructor(props) {
@@ -6,14 +7,15 @@ class Users extends Component {
         this.state = {  }
     }
     render() { 
-        const { users } = this.props;
+        const { users, createUser } = this.props;
         console.log(users)
         return ( 
             <div>
                 <h2>Users</h2>
+                <CreateUser createUser={createUser}/>
                 {
                     users.map(user=> {
-                        return <div>{Object.keys(user).map( key=>{ 
+                        return <div key={user.id}>{Object.keys(user).map( key=>{ 
                         if (key !== 'id') return user[key]
                     })}</div>
                     })
