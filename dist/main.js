@@ -39985,6 +39985,7 @@ function (_React$Component) {
       users: []
     };
     _this6.createUser = _this6.createUser.bind(_assertThisInitialized(_this6));
+    _this6.updateUser = _this6.updateUser.bind(_assertThisInitialized(_this6));
     return _this6;
   }
 
@@ -40041,13 +40042,53 @@ function (_React$Component) {
       return createUser;
     }()
   }, {
+    key: "updateUser",
+    value: function () {
+      var _updateUser = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee2(e, user) {
+        var idx, updatedUser, updatedUsers;
+        return regeneratorRuntime.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                e.preventDefault();
+                idx = this.state.users.indexOf(user);
+                _context2.next = 4;
+                return db.update(user);
+
+              case 4:
+                updatedUser = _context2.sent;
+                console.log(updatedUser);
+                updatedUsers = this.state.users;
+                updatedUsers[idx] = updatedUser;
+                this.setState({
+                  users: updatedUsers
+                });
+
+              case 9:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      function updateUser(_x4, _x5) {
+        return _updateUser.apply(this, arguments);
+      }
+
+      return updateUser;
+    }()
+  }, {
     key: "render",
     value: function render() {
       console.log(this.state);
       var _this$state = this.state,
           users = _this$state.users,
           admins = _this$state.admins;
-      var createUser = this.createUser;
+      var createUser = this.createUser,
+          updateUser = this.updateUser;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__["HashRouter"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "nav"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__["NavLink"], {
@@ -40075,7 +40116,8 @@ function (_React$Component) {
         path: "/users/:id",
         render: function render(props) {
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_UpdateUser__WEBPACK_IMPORTED_MODULE_3__["default"], _extends({
-            users: users
+            users: users,
+            updateUser: updateUser
           }, props));
         }
       }));
@@ -40305,7 +40347,12 @@ function (_Component) {
       console.log(this.state);
       var user = this.state.user;
       var handleChange = this.handleChange;
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Update User"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      var updateUser = this.props.updateUser;
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+        onSubmit: function onSubmit(e) {
+          return updateUser(e, user);
+        }
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Update User"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         placeholder: "enter name",
         name: "name",
         value: user && user.name,

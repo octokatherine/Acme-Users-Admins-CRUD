@@ -36,8 +36,9 @@ class UpdateUser extends Component {
         console.log(this.state)
         const { user } = this.state;
         const { handleChange } = this;
+        const { updateUser } = this.props;
         return ( 
-            <form>
+            <form onSubmit={(e)=>updateUser(e, user)}>
                 <h3>Update User</h3>
                 <input placeholder="enter name" name="name" value={user && user.name} onChange={handleChange}></input>
                 <button type='submit'>Update</button>
