@@ -26,7 +26,7 @@ class CreateUser extends Component {
         const { handleChange, handleCheckChange } = this;
         const { name, isAdmin } = this.state;
         return ( 
-            <form onSubmit={(e)=>{createUser(e, name, isAdmin)}}>
+            <form onSubmit={(e)=>{createUser(e, name, isAdmin); this.state.name=''; this.state.isAdmin=false}}>
                 <h3>Create A User</h3>
                 <input type='text' name='name' placeholder='enter name' value={name} onChange={handleChange}></input>
                 <label>is Admin</label>

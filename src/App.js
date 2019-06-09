@@ -139,7 +139,7 @@ class App extends React.Component{
         console.log('delete')
         console.log(user)
         const idx = this.state.users.indexOf(user);
-        const deletedUser = await db.destroy(user);
+        db.destroy(user);
         const updatedUsers = Array.concat(this.state.users.slice(0, idx), this.state.users.slice(idx+1, this.state.users.length-1));
         this.setState({users: updatedUsers})
         
@@ -149,11 +149,12 @@ class App extends React.Component{
         console.log(this.state);
         const { users, admins } = this.state;
         const { createUser, updateUser, deleteUser } = this;
+        const numAdmins = users.filter((el)=>el.isAdmin)
       return( 
           <HashRouter>
             <div id='nav'>
-                <NavLink exact activeClassName='is-active' to='/'>Home</NavLink>
-                <NavLink exact activeClassName='is-active' to='/users'>Users ({users.length})</NavLink>
+                <NavLink style={{marginRight: '20px'}} exact activeClassName='is-active' to='/'>Home</NavLink>
+                <NavLink exact activeClassName='is-active' to='/users'>Users:({users.length}) Admins:({numAdmins.length})</NavLink>
             </div>
             <Route exact path='/' component={Home}/>
             <Route path='/users' render={()=><Users users={users} createUser={createUser} admins={admins}/>}/>

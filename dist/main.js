@@ -40089,7 +40089,7 @@ function (_React$Component) {
       var _deleteUser = _asyncToGenerator(
       /*#__PURE__*/
       regeneratorRuntime.mark(function _callee3(e, user) {
-        var idx, deletedUser, updatedUsers;
+        var idx, updatedUsers;
         return regeneratorRuntime.wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
@@ -40098,17 +40098,13 @@ function (_React$Component) {
                 console.log('delete');
                 console.log(user);
                 idx = this.state.users.indexOf(user);
-                _context3.next = 6;
-                return db.destroy(user);
-
-              case 6:
-                deletedUser = _context3.sent;
+                db.destroy(user);
                 updatedUsers = Array.concat(this.state.users.slice(0, idx), this.state.users.slice(idx + 1, this.state.users.length - 1));
                 this.setState({
                   users: updatedUsers
                 });
 
-              case 9:
+              case 7:
               case "end":
                 return _context3.stop();
             }
@@ -40132,9 +40128,15 @@ function (_React$Component) {
       var createUser = this.createUser,
           updateUser = this.updateUser,
           deleteUser = this.deleteUser;
+      var numAdmins = users.filter(function (el) {
+        return el.isAdmin;
+      });
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__["HashRouter"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "nav"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__["NavLink"], {
+        style: {
+          marginRight: '20px'
+        },
         exact: true,
         activeClassName: "is-active",
         to: "/"
@@ -40142,7 +40144,7 @@ function (_React$Component) {
         exact: true,
         activeClassName: "is-active",
         to: "/users"
-      }, "Users (", users.length, ")")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__["Route"], {
+      }, "Users:(", users.length, ") Admins:(", numAdmins.length, ")")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__["Route"], {
         exact: true,
         path: "/",
         component: _Home__WEBPACK_IMPORTED_MODULE_1__["default"]
@@ -40245,6 +40247,8 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
+      var _this2 = this;
+
       var createUser = this.props.createUser;
       var handleChange = this.handleChange,
           handleCheckChange = this.handleCheckChange;
@@ -40254,6 +40258,8 @@ function (_Component) {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
         onSubmit: function onSubmit(e) {
           createUser(e, name, isAdmin);
+          _this2.state.name = '';
+          _this2.state.isAdmin = false;
         }
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Create A User"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
