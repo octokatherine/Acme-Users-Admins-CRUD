@@ -14,11 +14,10 @@ class UpdateUser extends Component {
 
     componentDidMount(){
         try {
-        const { users } = this.props;
-        console.log(this.props)
-        const { id } = this.props.match.params;
-        const user = users.find(function(user) {return user.id === id})
-        this.setState({user, isAdmin: user.isAdmin})
+            const { users } = this.props;
+            const { id } = this.props.match.params;
+            const user = users.find(function(user) {return user.id === id});
+            this.setState({user, isAdmin: user.isAdmin});
         }
         catch (err) {
             console.log(err)
@@ -26,32 +25,31 @@ class UpdateUser extends Component {
     }
 
     componentDidUpdate(prevProps){
-        try{
-        if (prevProps.match.params !== this.props.match.params) {
-            const { users } = this.props;
-            const { id } = this.props.match.params;
-            const user = users.find(function(user) {return user.id === id})
-            this.setState({user, isAdmin: user.isAdmin})
+        try {
+            if (prevProps.match.params !== this.props.match.params) {
+                const { users } = this.props;
+                const { id } = this.props.match.params;
+                const user = users.find(function(user) {return user.id === id});
+                this.setState({user, isAdmin: user.isAdmin});
+                }
+            }
+        catch(err) {
+            console.log(err);
         }
-    }
-    catch(err) {
-        console.log(err)
-    }
-    }
+        }
 
     handleChange(ev){
         const updatedUser = this.state.user;
         updatedUser.name = ev.target.value;
-        this.setState({user: updatedUser})
+        this.setState({user: updatedUser});
     }
 
     handleCheckChange(ev){
-        const value = ev.target.checked
-        this.setState({isAdmin: value})
+        const value = ev.target.checked;
+        this.setState({isAdmin: value});
     }
 
     render() { 
-        console.log(this.state)
         const { user, isAdmin } = this.state;
         const { handleChange, handleCheckChange } = this;
         const { updateUser, deleteUser } = this.props;

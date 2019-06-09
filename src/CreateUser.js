@@ -12,13 +12,12 @@ class CreateUser extends Component {
     }
 
     handleChange(ev){
-        this.setState({name: ev.target.value})
-        console.log(this.state.name)
+        this.setState({name: ev.target.value});
     }
 
     handleCheckChange(ev){
-        const value = ev.target.checked
-        this.setState({isAdmin: value})
+        const value = ev.target.checked;
+        this.setState({isAdmin: value});
     }
     
     render() { 

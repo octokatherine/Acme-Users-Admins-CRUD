@@ -9,7 +9,6 @@ class Users extends Component {
     }
     render() { 
         const { users, createUser} = this.props;
-        console.log(users)
         return ( 
             <div>
                 <h2>Users</h2>

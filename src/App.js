@@ -110,17 +110,13 @@ class App extends React.Component{
     componentDidMount(){
       db.read()
         .then(users => this.setState({ users }))
-
-      console.log(this.state)
     }
 
     async createUser(e, name, isAdmin){
         e.preventDefault();
         const newUser = await db.create({name, isAdmin})
-        console.log(newUser)
         const users = [...this.state.users, newUser];
         this.setState({users});
-        console.log('created')
     }
 
     async updateUser(e, user, isAdmin) {
@@ -128,7 +124,6 @@ class App extends React.Component{
         const idx = this.state.users.indexOf(user);
         const updatedUser = await db.update(user);
         updatedUser.isAdmin = isAdmin;
-        console.log(updatedUser)
         const updatedUsers = this.state.users;
         updatedUsers[idx] = updatedUser;
         this.setState({users: updatedUsers})
@@ -136,8 +131,6 @@ class App extends React.Component{
 
     async deleteUser(e, user){
         e.preventDefault();
-        console.log('delete')
-        console.log(user)
         const idx = this.state.users.indexOf(user);
         db.destroy(user);
         const updatedUsers = Array.concat(this.state.users.slice(0, idx), this.state.users.slice(idx+1, this.state.users.length-1));
@@ -146,10 +139,9 @@ class App extends React.Component{
     }
 
     render(){
-        console.log(this.state);
         const { users, admins } = this.state;
         const { createUser, updateUser, deleteUser } = this;
-        const numAdmins = users.filter((el)=>el.isAdmin)
+        const numAdmins = users.filter((el)=>el.isAdmin);
       return( 
           <HashRouter>
             <div id='nav'>

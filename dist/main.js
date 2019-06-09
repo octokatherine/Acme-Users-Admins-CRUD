@@ -40000,7 +40000,6 @@ function (_React$Component) {
           users: users
         });
       });
-      console.log(this.state);
     }
   }, {
     key: "createUser",
@@ -40022,14 +40021,12 @@ function (_React$Component) {
 
               case 3:
                 newUser = _context.sent;
-                console.log(newUser);
                 users = [].concat(_toConsumableArray(this.state.users), [newUser]);
                 this.setState({
                   users: users
                 });
-                console.log('created');
 
-              case 8:
+              case 6:
               case "end":
                 return _context.stop();
             }
@@ -40062,14 +40059,13 @@ function (_React$Component) {
               case 4:
                 updatedUser = _context2.sent;
                 updatedUser.isAdmin = isAdmin;
-                console.log(updatedUser);
                 updatedUsers = this.state.users;
                 updatedUsers[idx] = updatedUser;
                 this.setState({
                   users: updatedUsers
                 });
 
-              case 10:
+              case 9:
               case "end":
                 return _context2.stop();
             }
@@ -40095,8 +40091,6 @@ function (_React$Component) {
             switch (_context3.prev = _context3.next) {
               case 0:
                 e.preventDefault();
-                console.log('delete');
-                console.log(user);
                 idx = this.state.users.indexOf(user);
                 db.destroy(user);
                 updatedUsers = Array.concat(this.state.users.slice(0, idx), this.state.users.slice(idx + 1, this.state.users.length - 1));
@@ -40104,7 +40098,7 @@ function (_React$Component) {
                   users: updatedUsers
                 });
 
-              case 7:
+              case 5:
               case "end":
                 return _context3.stop();
             }
@@ -40121,7 +40115,6 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      console.log(this.state);
       var _this$state = this.state,
           users = _this$state.users,
           admins = _this$state.admins;
@@ -40234,7 +40227,6 @@ function (_Component) {
       this.setState({
         name: ev.target.value
       });
-      console.log(this.state.name);
     }
   }, {
     key: "handleCheckChange",
@@ -40364,7 +40356,6 @@ function (_Component) {
     value: function componentDidMount() {
       try {
         var users = this.props.users;
-        console.log(this.props);
         var id = this.props.match.params.id;
         var user = users.find(function (user) {
           return user.id === id;
@@ -40416,7 +40407,6 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      console.log(this.state);
       var _this$state = this.state,
           user = _this$state.user,
           isAdmin = _this$state.isAdmin;
@@ -40517,7 +40507,6 @@ function (_Component) {
       var _this$props = this.props,
           users = _this$props.users,
           createUser = _this$props.createUser;
-      console.log(users);
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Users"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_CreateUser__WEBPACK_IMPORTED_MODULE_2__["default"], {
         createUser: createUser
       }), users.map(function (user) {
