@@ -17,6 +17,7 @@ class UpdateUser extends Component {
             const { users } = this.props;
             const { id } = this.props.match.params;
             const user = users.find(function(user) {return user.id === id});
+            console.log(user);
             this.setState({user, isAdmin: user.isAdmin});
         }
         catch (err) {
@@ -60,7 +61,7 @@ class UpdateUser extends Component {
                 <label>is Admin</label>
                 <input type="checkbox" name="isAdmin" checked={isAdmin} onChange={handleCheckChange}></input>
                 <button type='submit' id='update'>Update</button>
-                <button type='button' id='delete' onClick={(e)=>deleteUser(e, user)}>Delete</button>
+                <button type='button' id='delete' onClick={(e)=>{deleteUser(e, user); this.props.history.push('/users')}}>Delete</button>
                 <Link to='/users'>Cancel</Link>
             </form>
          );

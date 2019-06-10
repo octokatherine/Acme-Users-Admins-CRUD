@@ -40360,6 +40360,7 @@ function (_Component) {
         var user = users.find(function (user) {
           return user.id === id;
         });
+        console.log(user);
         this.setState({
           user: user,
           isAdmin: user.isAdmin
@@ -40407,6 +40408,8 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
+      var _this2 = this;
+
       var _this$state = this.state,
           user = _this$state.user,
           isAdmin = _this$state.isAdmin;
@@ -40436,7 +40439,9 @@ function (_Component) {
         type: "button",
         id: "delete",
         onClick: function onClick(e) {
-          return deleteUser(e, user);
+          deleteUser(e, user);
+
+          _this2.props.history.push('/users');
         }
       }, "Delete"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
         to: "/users"
