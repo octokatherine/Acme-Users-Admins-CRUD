@@ -6,6 +6,7 @@ class UpdateUser extends Component {
         super(props);
         this.state = { 
             user: {},
+            name: '',
             isAdmin: false
          }
          this.handleChange = this.handleChange.bind(this);
@@ -15,10 +16,14 @@ class UpdateUser extends Component {
     componentDidMount(){
         try {
             const { users } = this.props;
+            console.log(users)
+            console.log(this.props);
             const { id } = this.props.match.params;
             const user = users.find(function(user) {return user.id === id});
             console.log(user);
-            this.setState({user, isAdmin: user.isAdmin});
+            if(user){
+            this.setState({user, name: user.name, isAdmin: user.isAdmin});
+            }
         }
         catch (err) {
             console.log(err)
@@ -26,23 +31,18 @@ class UpdateUser extends Component {
     }
 
     componentDidUpdate(prevProps){
-        try {
-            if (prevProps.match.params !== this.props.match.params) {
-                const { users } = this.props;
-                const { id } = this.props.match.params;
-                const user = users.find(function(user) {return user.id === id});
-                this.setState({user, isAdmin: user.isAdmin});
-                }
+        if (prevProps.match.params !== this.props.match.params) {
+            const { users } = this.props;
+            const { id } = this.props.match.params;
+            const user = users.find(function(user) {return user.id === id});
+            this.setState({user, name: user.name, isAdmin: user.isAdmin});
             }
-        catch(err) {
-            console.log(err);
         }
-        }
+        
 
     handleChange(ev){
-        const updatedUser = this.state.user;
-        updatedUser.name = ev.target.value;
-        this.setState({user: updatedUser});
+        const name = ev.target.value;
+        this.setState({name});
     }
 
     handleCheckChange(ev){
@@ -51,13 +51,13 @@ class UpdateUser extends Component {
     }
 
     render() { 
-        const { user, isAdmin } = this.state;
+        const { user, isAdmin, name } = this.state;
         const { handleChange, handleCheckChange } = this;
         const { updateUser, deleteUser } = this.props;
         return ( 
-            <form onSubmit={(e)=>updateUser(e, user, isAdmin)}>
+            <form onSubmit={(e)=>updateUser(e, user, name, isAdmin)}>
                 <h3>Update User</h3>
-                <input placeholder="enter name" name="name" value={user && user.name} onChange={handleChange}></input>
+                <input placeholder="enter name" name="name" value={name} onChange={handleChange}></input>
                 <label>is Admin</label>
                 <input type="checkbox" name="isAdmin" checked={isAdmin} onChange={handleCheckChange}></input>
                 <button type='submit' id='update'>Update</button>

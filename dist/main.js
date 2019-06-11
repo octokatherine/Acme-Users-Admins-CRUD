@@ -39992,35 +39992,59 @@ function (_React$Component) {
 
   _createClass(App, [{
     key: "componentDidMount",
-    value: function componentDidMount() {
-      var _this7 = this;
+    value: function () {
+      var _componentDidMount = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee() {
+        var users;
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return db.read();
 
-      db.read().then(function (users) {
-        return _this7.setState({
-          users: users
-        });
-      });
-    }
+              case 2:
+                users = _context.sent;
+                console.log(users);
+                this.setState({
+                  users: users
+                });
+
+              case 5:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function componentDidMount() {
+        return _componentDidMount.apply(this, arguments);
+      }
+
+      return componentDidMount;
+    }()
   }, {
     key: "createUser",
     value: function () {
       var _createUser = _asyncToGenerator(
       /*#__PURE__*/
-      regeneratorRuntime.mark(function _callee(e, name, isAdmin) {
+      regeneratorRuntime.mark(function _callee2(e, name, isAdmin) {
         var newUser, users;
-        return regeneratorRuntime.wrap(function _callee$(_context) {
+        return regeneratorRuntime.wrap(function _callee2$(_context2) {
           while (1) {
-            switch (_context.prev = _context.next) {
+            switch (_context2.prev = _context2.next) {
               case 0:
                 e.preventDefault();
-                _context.next = 3;
+                _context2.next = 3;
                 return db.create({
                   name: name,
                   isAdmin: isAdmin
                 });
 
               case 3:
-                newUser = _context.sent;
+                newUser = _context2.sent;
                 users = [].concat(_toConsumableArray(this.state.users), [newUser]);
                 this.setState({
                   users: users
@@ -40028,10 +40052,10 @@ function (_React$Component) {
 
               case 6:
               case "end":
-                return _context.stop();
+                return _context2.stop();
             }
           }
-        }, _callee, this);
+        }, _callee2, this);
       }));
 
       function createUser(_x, _x2, _x3) {
@@ -40045,19 +40069,20 @@ function (_React$Component) {
     value: function () {
       var _updateUser = _asyncToGenerator(
       /*#__PURE__*/
-      regeneratorRuntime.mark(function _callee2(e, user, isAdmin) {
+      regeneratorRuntime.mark(function _callee3(e, user, name, isAdmin) {
         var idx, updatedUser, updatedUsers;
-        return regeneratorRuntime.wrap(function _callee2$(_context2) {
+        return regeneratorRuntime.wrap(function _callee3$(_context3) {
           while (1) {
-            switch (_context2.prev = _context2.next) {
+            switch (_context3.prev = _context3.next) {
               case 0:
                 e.preventDefault();
                 idx = this.state.users.indexOf(user);
-                _context2.next = 4;
+                user.name = name;
+                _context3.next = 5;
                 return db.update(user);
 
-              case 4:
-                updatedUser = _context2.sent;
+              case 5:
+                updatedUser = _context3.sent;
                 updatedUser.isAdmin = isAdmin;
                 updatedUsers = this.state.users;
                 updatedUsers[idx] = updatedUser;
@@ -40065,15 +40090,15 @@ function (_React$Component) {
                   users: updatedUsers
                 });
 
-              case 9:
+              case 10:
               case "end":
-                return _context2.stop();
+                return _context3.stop();
             }
           }
-        }, _callee2, this);
+        }, _callee3, this);
       }));
 
-      function updateUser(_x4, _x5, _x6) {
+      function updateUser(_x4, _x5, _x6, _x7) {
         return _updateUser.apply(this, arguments);
       }
 
@@ -40084,11 +40109,11 @@ function (_React$Component) {
     value: function () {
       var _deleteUser = _asyncToGenerator(
       /*#__PURE__*/
-      regeneratorRuntime.mark(function _callee3(e, user) {
+      regeneratorRuntime.mark(function _callee4(e, user) {
         var idx, updatedUsers;
-        return regeneratorRuntime.wrap(function _callee3$(_context3) {
+        return regeneratorRuntime.wrap(function _callee4$(_context4) {
           while (1) {
-            switch (_context3.prev = _context3.next) {
+            switch (_context4.prev = _context4.next) {
               case 0:
                 e.preventDefault();
                 idx = this.state.users.indexOf(user);
@@ -40100,13 +40125,13 @@ function (_React$Component) {
 
               case 5:
               case "end":
-                return _context3.stop();
+                return _context4.stop();
             }
           }
-        }, _callee3, this);
+        }, _callee4, this);
       }));
 
-      function deleteUser(_x7, _x8) {
+      function deleteUser(_x8, _x9) {
         return _deleteUser.apply(this, arguments);
       }
 
@@ -40124,6 +40149,7 @@ function (_React$Component) {
       var numAdmins = users.filter(function (el) {
         return el.isAdmin;
       });
+      console.log(this.state.users);
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__["HashRouter"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "nav"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__["NavLink"], {
@@ -40344,6 +40370,7 @@ function (_Component) {
     _this = _possibleConstructorReturn(this, _getPrototypeOf(UpdateUser).call(this, props));
     _this.state = {
       user: {},
+      name: '',
       isAdmin: false
     };
     _this.handleChange = _this.handleChange.bind(_assertThisInitialized(_this));
@@ -40356,31 +40383,18 @@ function (_Component) {
     value: function componentDidMount() {
       try {
         var users = this.props.users;
+        console.log(users);
+        console.log(this.props);
         var id = this.props.match.params.id;
         var user = users.find(function (user) {
           return user.id === id;
         });
         console.log(user);
-        this.setState({
-          user: user,
-          isAdmin: user.isAdmin
-        });
-      } catch (err) {
-        console.log(err);
-      }
-    }
-  }, {
-    key: "componentDidUpdate",
-    value: function componentDidUpdate(prevProps) {
-      try {
-        if (prevProps.match.params !== this.props.match.params) {
-          var users = this.props.users;
-          var id = this.props.match.params.id;
-          var user = users.find(function (user) {
-            return user.id === id;
-          });
+
+        if (user) {
           this.setState({
             user: user,
+            name: user.name,
             isAdmin: user.isAdmin
           });
         }
@@ -40389,12 +40403,27 @@ function (_Component) {
       }
     }
   }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps) {
+      if (prevProps.match.params !== this.props.match.params) {
+        var users = this.props.users;
+        var id = this.props.match.params.id;
+        var user = users.find(function (user) {
+          return user.id === id;
+        });
+        this.setState({
+          user: user,
+          name: user.name,
+          isAdmin: user.isAdmin
+        });
+      }
+    }
+  }, {
     key: "handleChange",
     value: function handleChange(ev) {
-      var updatedUser = this.state.user;
-      updatedUser.name = ev.target.value;
+      var name = ev.target.value;
       this.setState({
-        user: updatedUser
+        name: name
       });
     }
   }, {
@@ -40412,7 +40441,8 @@ function (_Component) {
 
       var _this$state = this.state,
           user = _this$state.user,
-          isAdmin = _this$state.isAdmin;
+          isAdmin = _this$state.isAdmin,
+          name = _this$state.name;
       var handleChange = this.handleChange,
           handleCheckChange = this.handleCheckChange;
       var _this$props = this.props,
@@ -40420,12 +40450,12 @@ function (_Component) {
           deleteUser = _this$props.deleteUser;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
         onSubmit: function onSubmit(e) {
-          return updateUser(e, user, isAdmin);
+          return updateUser(e, user, name, isAdmin);
         }
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Update User"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         placeholder: "enter name",
         name: "name",
-        value: user && user.name,
+        value: name,
         onChange: handleChange
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "is Admin"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "checkbox",
@@ -40512,6 +40542,7 @@ function (_Component) {
       var _this$props = this.props,
           users = _this$props.users,
           createUser = _this$props.createUser;
+      console.log(users);
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Users"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_CreateUser__WEBPACK_IMPORTED_MODULE_2__["default"], {
         createUser: createUser
       }), users.map(function (user) {
